@@ -5,24 +5,26 @@
 #include <algorithm>
 #include <exception>
 #include <fstream>
+#include <sstream>
+#include <cstdlib>
+#include <string>
 #include <map>
 
 class BitcoinExchange
 {
     private:
-        std::map<std::string, float> data;
+        static std::map<std::string, float> data;
 
-    public:
         BitcoinExchange();
         BitcoinExchange(const BitcoinExchange &New);
         ~BitcoinExchange();
         BitcoinExchange &operator=(const BitcoinExchange &New);
 
-        void createData(std::string name);
-        bool checkImput(std::string name);
-        void addExchange(std::string name, float rate);
-        void printExchange(std::string name);
-
+    public:
+        static void createData(std::string name);
+        static void addExchange(std::string name, float rate);
+        static void printExchange(std::string date, std::string value);
+        static void checkInput(std::string name);
 };
 
 #endif

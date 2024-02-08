@@ -2,14 +2,19 @@
 
 int main(int argc, char **argv) 
 {
-    BitcoinExchange ex;
-
-    if (argc == 2)
+    try
     {
-        ex.createData("Data.csv");
-        ex.printExchange(argv[1]);
+        if (argc == 2)
+        {
+            BitcoinExchange::createData("data.csv");
+            BitcoinExchange::checkInput(argv[1]);
+        }
+        else
+            throw std::invalid_argument("Error! No input file given.");
     }
-    else
-        std::cout << "Error! No file given." << std::endl;
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
     return 0;
 }
