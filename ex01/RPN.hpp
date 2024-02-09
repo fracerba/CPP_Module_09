@@ -5,17 +5,22 @@
 #include <algorithm>
 #include <exception>
 #include <fstream>
+#include <queue>
 
 class RPN
 {
     private:
-        //container
+        static std::queue<int> num;
+        static std::queue<char> ops;
 
-    public:
         RPN();
         RPN(const RPN &New);
         ~RPN();
         RPN &operator=(const RPN &New);
+
+    public:
+        static void parse(std::string str);
+        static void print();
 };
 
 #endif
