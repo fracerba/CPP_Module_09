@@ -50,7 +50,16 @@ void BitcoinExchange::createData(std::string name)
 void BitcoinExchange::addExchange(std::string name, float rate)
 {
     std::map<std::string, float>::iterator it;
-    for (it = data.begin(); it != data.end(); it++)
+    it = data.begin();
+    if (it->first.compare(name) > 0)
+    {
+        std::cout << "Error: invalid date." << std::endl;
+        return ;
+    }
+    std::cout << std::setprecision(6);
+    std::cout << name << " => " << rate << " = ";
+    std::cout << std::setprecision(15);
+    for (; it != data.end(); it++)
     {
         if (it->first.compare(name) > 0)
         {
@@ -65,12 +74,49 @@ void BitcoinExchange::addExchange(std::string name, float rate)
 
 void BitcoinExchange::printExchange(std::string date, std::string val)
 {
+    bool b = false;
+    bool c = false;
+
     if ((date == "Date" || date == "date") && (val == "Value" || val == "value"))
         return ;
-    else if (date.empty() || val.empty())
+
+    if (std::count(date.begin(), date.end(), '-') != 2)
+        b = true;
+    for (size_t a = 0; a < date.length(); a++)
+    {
+        if (date[a] == '-' && date[a + 1] == '-')
+            b = true;
+        else if (!isdigit(date[a]) && date[a] != '-')
+            b = true;
+        else if (date[a] == '-' && (a == 0 || a == date.length() - 1))
+            b = true;
+        if (b)
+            break ;
+    }
+    if (b)
+    {
         std::cout << "Error: bad input => " << date << std::endl;
-    else if (std::count(date.begin(), date.end(), '-') != 2)
-        std::cout << "Error: bad input => " << date << std::endl;
+        return ;
+    }
+
+    if (std::count(val.begin(), val.end(), '.') > 1)
+        c = true;
+    for (size_t a = 0; a < val.length(); a++)
+    {
+        if (!isdigit(val[a]) && val[a] != '.' && val[a] != '-' && val[a] != '+')
+            c = true;
+        else if (val[a] == '.' && (a == 0 || a == val.length() - 1))
+            c = true;
+        else if ((val[a] == '-' || val[a] == '+') && a != 0)
+            c = true;
+        if (c)
+            break ;
+    }
+    if (c)
+    {
+        std::cout << "Error: bad input => " << val << std::endl;
+        return ;
+    }
 
     int i = date.find('-');
     int y = date.find('-', i + 1);
@@ -92,23 +138,14 @@ void BitcoinExchange::printExchange(std::string date, std::string val)
         std::cout << "Error: invalid day." << std::endl;
     else if (nm == 2 && nd > 29)
         std::cout << "Error: invalid day." << std::endl;
-    else if (nm == 4 && nd > 30)
-        std::cout << "Error: invalid day." << std::endl;
-    else if (nm == 6 && nd > 30)
-        std::cout << "Error: invalid day." << std::endl;
-    else if (nm == 9 && nd > 30)
-        std::cout << "Error: invalid day." << std::endl;
-    else if (nm == 11 && nd > 30)
+    else if ((nm == 4 || nm == 6 || nm == 9 || nm == 11) && nd > 30)
         std::cout << "Error: invalid day." << std::endl;
     else if (value < 0)
         std::cout << "Error: not a positive number" << std::endl;
     else if (value > 1000)
         std::cout << "Error: too large a number" << std::endl;
     else
-    {
-        std::cout << date << " => " << value << " = ";
         addExchange(date, value);
-    }
 }
 
 void BitcoinExchange::checkInput(std::string name)
@@ -134,6 +171,11 @@ void BitcoinExchange::checkInput(std::string name)
             }
             date = line.substr(0, line.find('|') - 1);
             value = line.substr(line.find('|') + 2);
+            if (date.empty() || value.empty())
+            {
+                std::cout << "Error: bad input => " << line << std::endl;
+                continue ;
+            }
             printExchange(date, value);
         } while (getline(file, line));
         file.close();

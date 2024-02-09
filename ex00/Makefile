@@ -3,24 +3,27 @@ NAME = btc
 SRCS = main.cpp \
 	BitcoinExchange.cpp \
 
+HEADER = BitcoinExchange.hpp
+
 CFLAGS = -Wall -Wextra -Werror -Wshadow -std=c++98
 
 CC = c++
 
-OBJ = $(SRC:.cpp=.o)
+OBJ = $(SRCS:.cpp=.o)
 
 .cpp.o: 
 	$(CC) $(CFLAGS) -c $< -o $(<:.cpp=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(HEADER)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 clean:
-	@rm -rf $(NAME)
+	$(RM) $(OBJ)
 
 fclean: clean
+	$(RM) $(NAME)
 
 re: fclean all
 
