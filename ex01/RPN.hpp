@@ -5,13 +5,12 @@
 #include <algorithm>
 #include <exception>
 #include <fstream>
-#include <queue>
+#include <stack>
 
 class RPN
 {
     private:
-        static std::queue<int> num;
-        static std::queue<char> ops;
+        static std::stack<float> num;
 
         RPN();
         RPN(const RPN &New);

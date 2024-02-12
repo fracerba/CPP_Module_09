@@ -23,6 +23,7 @@ class BitcoinExchange
 
     public:
         static void createData(std::string name);
+        static void printResult(float rate);
         static void addExchange(std::string name, float rate);
         static void printExchange(std::string date, std::string value);
         static void checkInput(std::string name);

@@ -47,6 +47,19 @@ void BitcoinExchange::createData(std::string name)
     }
 }
 
+void BitcoinExchange::printResult(float rate)
+{
+    int c = 0;
+
+    for (float i = 10; (rate / i) > 0.1;)
+    {
+        i = i * 10;
+        c++;
+    }
+    std::cout << std::setprecision(c + 6);
+    std::cout << rate << std::endl;
+}
+
 void BitcoinExchange::addExchange(std::string name, float rate)
 {
     std::map<std::string, float>::iterator it;
@@ -58,18 +71,17 @@ void BitcoinExchange::addExchange(std::string name, float rate)
     }
     std::cout << std::setprecision(6);
     std::cout << name << " => " << rate << " = ";
-    std::cout << std::setprecision(15);
     for (; it != data.end(); it++)
     {
         if (it->first.compare(name) > 0)
         {
             it--;
-            std::cout << it->second * rate << std::endl;
+            printResult(it->second * rate);
             return ;
         }
     }
     it--;
-    std::cout << it->second * rate << std::endl;
+    printResult(it->second * rate);
 }
 
 void BitcoinExchange::printExchange(std::string date, std::string val)
