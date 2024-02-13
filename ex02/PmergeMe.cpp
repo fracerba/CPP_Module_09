@@ -44,12 +44,26 @@ void PmergeMe::PrintVector()
     std::cout << std::endl;
 }
 
-void PmergeMe::SortVector()
+void PmergeMe::InsertionSortVector(std::vector<unsigned int>::iterator b, std::vector<unsigned int>::iterator e)
 {
+    std::vector<unsigned int>::iterator it = b;
+    unsigned int n;
 
+    for (; it != e; it++)
+    {
+        std::vector<unsigned int>::iterator it2 = e;
+        for (; it2 != e; it2++)
+        {
+            // if ()
+            //     break;
+            // n = *it;
+            // *it = *it2;
+            // *it2 = n;
+        }
+    }
 }
 
-void PmergeMe::MergeSortVector()
+void PmergeMe::MergeInsertionSortVector()
 {
 
 }
@@ -72,12 +86,12 @@ void PmergeMe::PrintDeque()
     std::cout << std::endl;
 }
 
-void PmergeMe::SortDeque()
+void PmergeMe::InsertionSortDeque()
 {
 
 }
 
-void PmergeMe::MergeSortDeque()
+void PmergeMe::MergeInsertionSortDeque()
 {
 
 }

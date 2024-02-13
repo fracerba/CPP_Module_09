@@ -23,13 +23,13 @@ class PmergeMe
     public:
         static void FillVector(char **nmb);
         static void PrintVector();
-        static void SortVector();
-        static void MergeSortVector();
+        static void InsertionSortVector(std::vector<unsigned int>::iterator b, std::vector<unsigned int>::iterator e);
+        static void MergeInsertionSortVector();
         
         static void FillDeque(char **nmb);
         static void PrintDeque();
-        static void SortDeque();
-        static void MergeSortDeque();
+        static void InsertionSortDeque();
+        static void MergeInsertionSortDeque();
 };
 
 #endif

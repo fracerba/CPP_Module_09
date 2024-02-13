@@ -18,20 +18,22 @@ int main(int argc, char **argv)
             }
         }
     }
-    PmergeMe::FillVector(&argv[1]);
-    PmergeMe::FillDeque(&argv[1]);
     std::cout << "Before: " << std::endl;
-    PmergeMe::PrintVector();
-    int startq = clock();
-    PmergeMe::SortVector();
-    int stopq = clock();
+    for (size_t i = 1; i < argc; i++)
+        std::cout << argv[i] << " ";
+    std::cout << std::endl;
+    int startv = clock();
+    PmergeMe::FillVector(&argv[1]);
+    PmergeMe::MergeInsertionSortVector();
+    int stopv = clock();
     int startd = clock();
-    PmergeMe::SortDeque();
+    PmergeMe::FillDeque(&argv[1]);
+    PmergeMe::MergeInsertionSortDeque();
     int stopd = clock();
     std::cout << "After: " << std::endl;
     PmergeMe::PrintVector();
     std::cout << "Time to process a range of "<< argc - 1 << " elements with std::vector<unsigned int> : ";
-    std::cout << (stopq - startq) / double(CLOCKS_PER_SEC) * 1000  << "ms" << std::endl;
+    std::cout << (stopv - startv) / double(CLOCKS_PER_SEC) * 1000  << "ms" << std::endl;
     std::cout << "Time to process a range of "<< argc - 1 << " elements with std::deque<unsigned int> : ";
     std::cout << (stopd - startd) / double(CLOCKS_PER_SEC) * 1000  << "ms" << std::endl;
     return 0;
