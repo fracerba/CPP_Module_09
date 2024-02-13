@@ -148,9 +148,11 @@ void BitcoinExchange::printExchange(std::string date, std::string val)
         std::cout << "Error: invalid month." << std::endl;
     else if (nd > 31 || nd < 1)
         std::cout << "Error: invalid day." << std::endl;
-    else if (nm == 2 && nd > 28)
-        std::cout << "Error: invalid day." << std::endl;
     else if ((nm == 4 || nm == 6 || nm == 9 || nm == 11) && nd > 30)
+        std::cout << "Error: invalid day." << std::endl;
+    else if (ny % 4 != 0 && nm == 2 && nd > 28)
+        std::cout << "Error: invalid day." << std::endl;
+    else if (nm == 2 && nd > 29)
         std::cout << "Error: invalid day." << std::endl;
     else if (value < 0)
         std::cout << "Error: not a positive number" << std::endl;

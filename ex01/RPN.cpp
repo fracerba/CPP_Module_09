@@ -1,10 +1,10 @@
 #include "RPN.hpp"
 
-std::stack<float> RPN::num;
+std::stack<double> RPN::num;
 
 RPN::RPN()
 {
-    num = std::stack<float>();
+    num = std::stack<double>();
 }
 
 RPN::RPN(const RPN &New)
@@ -31,8 +31,8 @@ bool RPN::isOperator(char c)
 
 void RPN::parse(std::string str)
 {
-    int nm;
-    int op;
+    int nm = 0;
+    int op = 0;
 
     for (size_t i = 0; i < str.length(); i++)
     {
@@ -42,7 +42,10 @@ void RPN::parse(std::string str)
             op++;
         else if (str[i] == ' ')
             continue;
-        else if (str[i] = '-' && (i + 1 < str.length()) && isdigit(str[i + 1]))
+        else
+            throw std::invalid_argument("Invalid character in string");
+
+        if (str[i] == '-' && (i + 1 < str.length()) && isdigit(str[i + 1]))
             throw std::invalid_argument("Numbers must be positive integers between 0 and 9");
         else if (isOperator(str[i]) && (i + 1 < str.length()) && isdigit(str[i + 1]))
             throw std::invalid_argument("Numbers and operators must be separated by a space");
@@ -52,24 +55,51 @@ void RPN::parse(std::string str)
             throw std::invalid_argument("Numbers must be positive integers between 0 and 9");
         else if (isdigit(str[i]) && (i + 1 < str.length()) && isOperator(str[i + 1]))
             throw std::invalid_argument("Numbers and operators must be separated by a space");
-        else
-            throw std::invalid_argument("Invalid character in string");
     }
     if (nm - op != 1)
         throw std::invalid_argument("Invalid number of operators");
 }
 
+double RPN::calculate(double a, double b, char c)
+{
+    if (c == '+')
+        return a + b;
+    else if (c == '-')
+        return a - b;
+    else if (c == '*')
+        return a * b;
+    else if (c == '/')
+    {
+        if (b == 0)
+            throw std::invalid_argument("Division by zero");
+        return a / b;
+    }
+    return 0;
+}
+
 void RPN::print(std::string str)
 {
-    int nm;
+    double a;
+    double b;
 
     for (size_t i = 0; i < str.length(); i++)
     {
         if (str[i] == ' ')
             continue;
         else if (isdigit(str[i]))
-            nm++;
+            num.push(str[i] - '0');
         else if (isOperator(str[i]))
-            continue;
+        {
+            if (num.size() < 2)
+                throw std::invalid_argument("Invalid number of operands");
+            a = num.top();
+            num.pop();
+            b = num.top();
+            num.pop();
+            num.push(calculate(b, a, str[i]));
+        }
     }
+    if (num.size() != 1)
+        throw std::invalid_argument("Invalid number of operands");
+    std::cout << num.top() << std::endl;
 }
