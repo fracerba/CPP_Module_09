@@ -6,28 +6,30 @@
 #include <exception>
 #include <fstream>
 #include <deque>
-#include <queue>
+#include <vector>
 #include <ctime>
 
 class PmergeMe
 {
     private:
-        static std::queue<unsigned int> q;
+        static std::vector<unsigned int> v;
         static std::deque<unsigned int> d;
 
-    public:
         PmergeMe();
         PmergeMe(const PmergeMe &New);
         ~PmergeMe();
         PmergeMe &operator=(const PmergeMe &New);
 
-        void PrintQueue();
-        void SortQueue();
-        void MergeSortQueue();
+    public:
+        static void FillVector(char **nmb);
+        static void PrintVector();
+        static void SortVector();
+        static void MergeSortVector();
         
-        void PrintDeque();
-        void SortDeque();
-        void MergeSortDeque();
+        static void FillDeque(char **nmb);
+        static void PrintDeque();
+        static void SortDeque();
+        static void MergeSortDeque();
 };
 
 #endif

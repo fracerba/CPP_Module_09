@@ -7,7 +7,7 @@ int main(int argc, char **argv)
         if (argc == 2)
         {
             RPN::parse(argv[1]);
-            RPN::print();
+            RPN::print(argv[1]);
         }
         else
             throw std::invalid_argument("Error! Wrong number of arguments.");

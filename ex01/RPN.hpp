@@ -18,8 +18,9 @@ class RPN
         RPN &operator=(const RPN &New);
 
     public:
+        static bool isOperator(char c);
         static void parse(std::string str);
-        static void print();
+        static void print(std::string str);
 };
 
 #endif
