@@ -29,69 +29,67 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &New)
 void PmergeMe::FillVector(char **nmb)
 {
     for (size_t i = 0; nmb[i]; i++)
-    {
         v.push_back(atoi(nmb[i]));
-    }
 }
 
 void PmergeMe::PrintVector()
 {
     std::vector<unsigned int>::iterator it = v.begin();
     for (; it != v.end(); it++)
-    {
         std::cout << *it << " ";
-    }
     std::cout << std::endl;
 }
 
-void PmergeMe::InsertionSortVector(std::vector<unsigned int>::iterator b, std::vector<unsigned int>::iterator e)
+void PmergeMe::MergeInsertionSortVector(std::vector<unsigned int> vec, std::vector<unsigned int>::iterator b, std::vector<unsigned int>::iterator e)
 {
-    std::vector<unsigned int>::iterator it = b;
-    unsigned int n;
-
-    for (; it != e; it++)
+    if (std::distance(b, e) <= 2)
+        std::sort(b, e);
+    else
     {
-        std::vector<unsigned int>::iterator it2 = e;
-        for (; it2 != e; it2++)
-        {
-            // if ()
-            //     break;
-            // n = *it;
-            // *it = *it2;
-            // *it2 = n;
-        }
+        std::vector<unsigned int>::iterator m = b + std::distance(b, e) / 2;
+        MergeInsertionSortVector(vec, b, m);
+        MergeInsertionSortVector(vec, m, e);
+        std::vector<unsigned int> a(std::distance(b, e));
+        std::merge(b, m, m, e, a.begin());
+        std::copy(a.begin(), a.end(), b);
     }
 }
 
-void PmergeMe::MergeInsertionSortVector()
+void PmergeMe::SortVector()
 {
-
+   MergeInsertionSortVector(v, v.begin(), v.end());
 }
 
 void PmergeMe::FillDeque(char **nmb)
 {
     for (size_t i = 0; nmb[i]; i++)
-    {
         d.push_back(atoi(nmb[i]));
-    }
 }
 
 void PmergeMe::PrintDeque()
 {
     std::deque<unsigned int>::iterator it = d.begin();
     for (; it != d.end(); it++)
-    {
         std::cout << *it << " ";
-    }
     std::cout << std::endl;
 }
 
-void PmergeMe::InsertionSortDeque()
+void PmergeMe::MergeInsertionSortDeque(std::deque<unsigned int> deq, std::deque<unsigned int>::iterator b, std::deque<unsigned int>::iterator e)
 {
-
+    if (std::distance(b, e) <= 2)
+        std::sort(b, e);
+    else
+    {
+        std::deque<unsigned int>::iterator m = b + std::distance(b, e) / 2;   
+        MergeInsertionSortDeque(deq, b, m);
+        MergeInsertionSortDeque(deq, m, e);
+        std::deque<unsigned int> a(std::distance(b, e));
+        std::merge(b, m, m, e, a.begin());
+        std::copy(a.begin(), a.end(), b);
+    }
 }
 
-void PmergeMe::MergeInsertionSortDeque()
+void PmergeMe::SortDeque()
 {
-
+   MergeInsertionSortDeque(d, d.begin(), d.end());
 }

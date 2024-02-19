@@ -8,6 +8,7 @@
 #include <deque>
 #include <vector>
 #include <ctime>
+#include <iomanip>
 
 class PmergeMe
 {
@@ -23,13 +24,13 @@ class PmergeMe
     public:
         static void FillVector(char **nmb);
         static void PrintVector();
-        static void InsertionSortVector(std::vector<unsigned int>::iterator b, std::vector<unsigned int>::iterator e);
-        static void MergeInsertionSortVector();
+        static void MergeInsertionSortVector(std::vector<unsigned int> vec, std::vector<unsigned int>::iterator b, std::vector<unsigned int>::iterator e);
+        static void SortVector();
         
         static void FillDeque(char **nmb);
         static void PrintDeque();
-        static void InsertionSortDeque();
-        static void MergeInsertionSortDeque();
+        static void MergeInsertionSortDeque(std::deque<unsigned int> deq, std::deque<unsigned int>::iterator b, std::deque<unsigned int>::iterator e);
+        static void SortDeque();
 };
 
 #endif
